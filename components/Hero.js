@@ -6,6 +6,8 @@ import {
   useMotionValue,
   useSpring,
 } from "framer-motion";
+import GetStartedModal from "./GetStartedModal";
+import useModalStore from "../store/useModalStore";
 
 // --- Custom Star Icon ---
 const AIStarIcon = ({ className }) => (
@@ -105,6 +107,9 @@ const Hero = () => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
+  // Use Zustand store action
+  const openModal = useModalStore((state) => state.openModal);
+
   function handleMouseMove({ clientX, clientY, currentTarget }) {
     let { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
@@ -166,7 +171,7 @@ const Hero = () => {
       />
 
       <div className="relative z-10 max-w-6xl mx-auto flex flex-col items-center">
-        <h1 className="text-6xl md:text-8xl lg:text-9xl font-semibold tracking-tighter leading-[0.9] mb-12 select-none">
+        <h1 className="text-6xl md:text-8xl lg:text-8xl font-semibold tracking-tighter leading-[0.9] mb-12 select-none">
           <span className="block text-neutral-500">The future</span>
 
           <span className="block text-neutral-500">of development</span>
@@ -222,13 +227,19 @@ const Hero = () => {
 
         <div>
           <MagneticButton>
-            <button className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-xl bg-transparent border border-white/20 px-10 font-bold text-white transition-all duration-300 hover:border-[#2EC866] hover:bg-[#2EC866]/10 hover:shadow-[0_0_25px_rgba(46,200,102,0.2)]">
-              <span className="relative z-10 text-lg">Join The Community</span>
+            <button
+              onClick={openModal}
+              className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-xl bg-transparent border border-white/20 px-10 font-bold text-white transition-all duration-300 hover:border-[#2EC866] hover:bg-[#2EC866]/10 hover:shadow-[0_0_25px_rgba(46,200,102,0.2)]"
+            >
+              <span className="relative z-10 text-lg">Get Started</span>
               <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-[#2EC866] blur-[15px] opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           </MagneticButton>
         </div>
       </div>
+
+      {/* --- EXTERNAL MODAL COMPONENT (Managed via Zustand) --- */}
+      <GetStartedModal />
     </div>
   );
 };

@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import useModalStore from "../store/useModalStore";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
+  // Use store for opening modal
+  const openModal = useModalStore((state) => state.openModal);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -67,7 +71,10 @@ const Navbar = () => {
           <button className="text-white hover:text-[#2EC866] font-bold text-sm px-4 py-2 border border-white/20 rounded-lg hover:border-[#2EC866] transition-all">
             Request Demo
           </button>
-          <button className="bg-[#2EC866] hover:bg-[#25a955] text-black px-5 py-2 rounded-lg text-sm font-bold transition-all hover:scale-105 shadow-[0_0_15px_rgba(46,200,102,0.4)]">
+          <button
+            onClick={openModal}
+            className="bg-[#2EC866] hover:bg-[#25a955] text-black px-5 py-2 rounded-lg text-sm font-bold transition-all hover:scale-105 shadow-[0_0_15px_rgba(46,200,102,0.4)]"
+          >
             Sign Up
           </button>
         </div>
@@ -98,7 +105,13 @@ const Navbar = () => {
               {item.name}
             </a>
           ))}
-          <button className="bg-[#2EC866] text-black w-full py-4 rounded-xl font-bold text-lg">
+          <button
+            onClick={() => {
+              openModal();
+              setIsOpen(false);
+            }}
+            className="bg-[#2EC866] text-black w-full py-4 rounded-xl font-bold text-lg"
+          >
             Sign Up
           </button>
         </div>
