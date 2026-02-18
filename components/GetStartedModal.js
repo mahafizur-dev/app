@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   X,
   Loader2,
@@ -9,233 +9,39 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import useModalStore from "../store/useModalStore";
-import { supabase } from "../lib/supabaseClient";
+import { useGetStarted } from "../hooks/useGetStarted";
 
 const GetStartedModal = () => {
-  // Access state and actions from the global store
+  // Use the custom hook to get all state and handlers
   const {
     isOpen,
-    closeModal,
     step,
-    setStep,
     formData,
-    updateFormData,
-    resetForm,
-  } = useModalStore();
-
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [fieldErrors, setFieldErrors] = useState({});
-
-  // OTP State
-  const [showOtpInput, setShowOtpInput] = useState(false);
-  const [otp, setOtp] = useState("");
-  const [otpError, setOtpError] = useState("");
-  const [isSendingOtp, setIsSendingOtp] = useState(false);
-  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
-
-  // Timer State (120 seconds = 2 minutes)
-  const [timeLeft, setTimeLeft] = useState(0);
-
-  // Timer Countdown Effect
-  useEffect(() => {
-    if (timeLeft > 0) {
-      const timerId = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-      return () => clearInterval(timerId);
-    }
-  }, [timeLeft]);
-
-  // Format seconds into MM:SS
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-  };
+    isSubmitting,
+    isSuccess,
+    errorMessage,
+    fieldErrors,
+    showOtpInput,
+    otp,
+    otpError,
+    isSendingOtp,
+    isVerifyingOtp,
+    timeLeft,
+    closeModal,
+    handleChange,
+    setOtp,
+    formatTime,
+    handleNext,
+    handleResendOtp,
+    handleBackToPhone,
+    verifyOtp,
+    handleBack,
+    handleSubmit,
+  } = useGetStarted();
 
   if (!isOpen) return null;
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    updateFormData(name, value);
-
-    // Clear error when user types
-    if (fieldErrors[name]) {
-      setFieldErrors((prev) => ({ ...prev, [name]: "" }));
-    }
-  };
-
-  // --- Validation Logic ---
-
-  const validateStep1 = () => {
-    const errors = {};
-    if (!formData.fullName.trim()) errors.fullName = "Full name is required";
-
-    if (!formData.email.trim()) {
-      errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Please enter a valid email address";
-    }
-
-    const phone = formData.phone.trim();
-    // Regex: Matches BD numbers +88017..., 88017..., 017...
-    const bdPhoneRegex = /^(?:\+88|88)?(01[3-9]\d{8})$/;
-
-    if (!phone) {
-      errors.phone = "Phone number is required";
-    } else if (!bdPhoneRegex.test(phone.replace(/[\s-]/g, ""))) {
-      errors.phone = "Invalid BD number. Format: 017xxxxxxxx";
-    }
-
-    setFieldErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const validateStep2 = () => {
-    const errors = {};
-    if (!formData.companyName.trim())
-      errors.companyName = "Company name is required";
-    if (!formData.jobTitle.trim()) errors.jobTitle = "Job title is required";
-
-    setFieldErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  // --- API Handlers ---
-
-  const sendOtp = async () => {
-    setIsSendingOtp(true);
-    setOtpError("");
-    try {
-      const res = await fetch("/api/otp/send", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: formData.phone }),
-      });
-
-      // Safety Check: Ensure response is JSON
-      const contentType = res.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error(
-          "System Error: API route not found. Please check backend files.",
-        );
-      }
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "Failed to send OTP");
-
-      // Success: Show OTP Input and Start Timer
-      setShowOtpInput(true);
-      setTimeLeft(120);
-
-      console.log("OTP Sent via Backend");
-    } catch (error) {
-      console.error(error);
-      setFieldErrors((prev) => ({ ...prev, phone: error.message }));
-    } finally {
-      setIsSendingOtp(false);
-    }
-  };
-
-  const verifyOtp = async () => {
-    setIsVerifyingOtp(true);
-    setOtpError("");
-    try {
-      const res = await fetch("/api/otp/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ phone: formData.phone, code: otp }),
-      });
-
-      // Safety Check: Ensure response is JSON
-      const contentType = res.headers.get("content-type");
-      if (!contentType || !contentType.includes("application/json")) {
-        throw new Error("System Error: API route not found.");
-      }
-
-      const data = await res.json();
-
-      if (!res.ok) throw new Error(data.error || "Verification failed");
-
-      // Success: Move to Next Step & Clear OTP State
-      setShowOtpInput(false);
-      setStep(2);
-      setOtp("");
-      setTimeLeft(0);
-    } catch (error) {
-      setOtpError(error.message);
-    } finally {
-      setIsVerifyingOtp(false);
-    }
-  };
-
-  // --- UI Actions ---
-
-  const handleNext = () => {
-    if (validateStep1()) {
-      sendOtp();
-    }
-  };
-
-  const handleResendOtp = () => {
-    setOtp("");
-    setOtpError("");
-    sendOtp();
-  };
-
-  const handleBackToPhone = () => {
-    setShowOtpInput(false);
-    setOtp("");
-    setOtpError("");
-    setTimeLeft(0);
-  };
-
-  const handleBack = () => setStep(1);
-
-  const handleSubmit = async () => {
-    if (!validateStep2()) return;
-
-    setIsSubmitting(true);
-    setErrorMessage("");
-
-    try {
-      // Final Submission to Supabase 'leads' table
-      const { error } = await supabase.from("leads").insert([
-        {
-          full_name: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          company_name: formData.companyName,
-          company_size: formData.companySize,
-          job_title: formData.jobTitle,
-        },
-      ]);
-
-      if (error) throw error;
-
-      setIsSuccess(true);
-
-      // Close modal after delay
-      setTimeout(() => {
-        resetForm();
-        setIsSuccess(false);
-        setFieldErrors({});
-        setShowOtpInput(false);
-        setTimeLeft(0);
-        closeModal();
-      }, 2000);
-    } catch (error) {
-      console.error("Error submitting form:", error);
-      setErrorMessage("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+  // Helper to dynamically set input classes based on error state
   const getInputClass = (fieldName) => `
     w-full bg-white/5 border rounded-xl px-4 py-3 text-white placeholder-slate-600 
     focus:outline-none focus:ring-1 transition-all
@@ -320,7 +126,7 @@ const GetStartedModal = () => {
                       value={formData.fullName}
                       onChange={handleChange}
                       className={getInputClass("fullName")}
-                      placeholder="e.g. Ruman Sardar"
+                      placeholder="e.g. John Doe"
                     />
                     {fieldErrors.fullName && (
                       <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
@@ -339,7 +145,7 @@ const GetStartedModal = () => {
                       value={formData.email}
                       onChange={handleChange}
                       className={getInputClass("email")}
-                      placeholder="e.g. ruman@gmail.com"
+                      placeholder="e.g. john@company.com"
                     />
                     {fieldErrors.email && (
                       <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
@@ -501,7 +307,7 @@ const GetStartedModal = () => {
                 <div className="space-y-4">
                   <div>
                     <label className="block text-xs font-medium text-slate-400 mb-1.5 uppercase tracking-wider">
-                      Business Name <span className="text-red-500">*</span>
+                      Company Name <span className="text-red-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -509,7 +315,7 @@ const GetStartedModal = () => {
                       value={formData.companyName}
                       onChange={handleChange}
                       className={getInputClass("companyName")}
-                      placeholder="e.g. Presswayy"
+                      placeholder="e.g. Acme Inc."
                     />
                     {fieldErrors.companyName && (
                       <p className="text-red-500 text-xs mt-1 flex items-center gap-1">
@@ -520,7 +326,7 @@ const GetStartedModal = () => {
 
                   <div>
                     <label className="block text-xs font-medium text-slate-400 mb-1.5 uppercase tracking-wider">
-                      Business Type
+                      Company Size
                     </label>
                     <select
                       name="companySize"
@@ -528,9 +334,10 @@ const GetStartedModal = () => {
                       onChange={handleChange}
                       className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#2EC866] focus:ring-1 focus:ring-[#2EC866] transition-all appearance-none"
                     >
-                      <option className="bg-[#0A0A0A]">Service</option>
-                      <option className="bg-[#0A0A0A]">Ecommerce</option>
-                      
+                      <option className="bg-[#0A0A0A]">1-10 employees</option>
+                      <option className="bg-[#0A0A0A]">11-50 employees</option>
+                      <option className="bg-[#0A0A0A]">51-200 employees</option>
+                      <option className="bg-[#0A0A0A]">200+ employees</option>
                     </select>
                   </div>
 
