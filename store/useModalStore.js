@@ -10,10 +10,13 @@ const useModalStore = create((set) => ({
     companyName: "",
     companySize: "1-10 employees",
     jobTitle: "",
+    meetingDate: "", // New
+    meetingTime: "10:00 AM", // New (Default start time)
+    meetingPlatform: "Google Meet", // New
   },
 
   // Actions
-  openModal: () => set({ isOpen: true, step: 1 }), // Always reset to step 1 on open
+  openModal: () => set({ isOpen: true, step: 1 }),
   closeModal: () => set({ isOpen: false }),
   setStep: (step) => set({ step }),
 
@@ -23,7 +26,7 @@ const useModalStore = create((set) => ({
       formData: { ...state.formData, [field]: value },
     })),
 
-  // Reset form (optional, for after submission)
+  // Reset form
   resetForm: () =>
     set({
       step: 1,
@@ -34,6 +37,9 @@ const useModalStore = create((set) => ({
         companyName: "",
         companySize: "1-10 employees",
         jobTitle: "",
+        meetingDate: "",
+        meetingTime: "10:00 AM",
+        meetingPlatform: "Google Meet",
       },
     }),
 }));

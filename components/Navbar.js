@@ -75,7 +75,7 @@ const Navbar = () => {
             onClick={openModal}
             className="bg-[#2EC866] hover:bg-[#25a955] text-black px-5 py-2 rounded-lg text-sm font-bold transition-all hover:scale-105 shadow-[0_0_15px_rgba(46,200,102,0.4)]"
           >
-            Sign Up
+            Get Started
           </button>
         </div>
 
@@ -112,7 +112,7 @@ const Navbar = () => {
             }}
             className="bg-[#2EC866] text-black w-full py-4 rounded-xl font-bold text-lg"
           >
-            Sign Up
+            Get Started
           </button>
         </div>
       )}

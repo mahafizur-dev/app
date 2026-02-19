@@ -41,14 +41,36 @@ export const useGetStarted = () => {
     return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
   };
 
-  // Handlers
+  // Generic Handler
   const handleChange = (e) => {
     const { name, value } = e.target;
     updateFormData(name, value);
     if (fieldErrors[name]) setFieldErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
-  // Validation
+  // Special Handler for Date to block Fridays
+  const handleDateChange = (e) => {
+    const dateValue = e.target.value;
+    if (!dateValue) return;
+
+    // Create date object (Treat YYYY-MM-DD as UTC)
+    const day = new Date(dateValue).getUTCDay();
+
+    // Check if Friday (5)
+    if (day === 5) {
+      setFieldErrors((prev) => ({
+        ...prev,
+        meetingDate: "Fridays are closed. Please select another day.",
+      }));
+      updateFormData("meetingDate", ""); // Clear invalid value
+    } else {
+      updateFormData("meetingDate", dateValue);
+      if (fieldErrors.meetingDate)
+        setFieldErrors((prev) => ({ ...prev, meetingDate: "" }));
+    }
+  };
+
+  // Step 1 Validation
   const validateStep1 = () => {
     const errors = {};
     if (!formData.fullName.trim()) errors.fullName = "Full name is required";
@@ -57,6 +79,7 @@ export const useGetStarted = () => {
       errors.email = "Invalid email address";
 
     const phone = formData.phone.trim();
+    // Regex matches +8801..., 8801..., 01...
     const bdPhoneRegex = /^(?:\+88|88)?(01[3-9]\d{8})$/;
 
     if (!phone) errors.phone = "Phone number is required";
@@ -67,11 +90,15 @@ export const useGetStarted = () => {
     return Object.keys(errors).length === 0;
   };
 
+  // Step 2 Validation
   const validateStep2 = () => {
     const errors = {};
     if (!formData.companyName.trim())
       errors.companyName = "Company name is required";
     if (!formData.jobTitle.trim()) errors.jobTitle = "Job title is required";
+    if (!formData.meetingDate) errors.meetingDate = "Please select a date";
+    if (!formData.meetingTime) errors.meetingTime = "Please select a time";
+
     setFieldErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -140,6 +167,7 @@ export const useGetStarted = () => {
     setErrorMessage("");
 
     try {
+      // 1. Insert Data into Supabase
       const { error } = await supabase.from("leads").insert([
         {
           full_name: formData.fullName,
@@ -148,11 +176,28 @@ export const useGetStarted = () => {
           company_name: formData.companyName,
           company_size: formData.companySize,
           job_title: formData.jobTitle,
+          meeting_date: formData.meetingDate,
+          meeting_time: formData.meetingTime,
+          meeting_platform: formData.meetingPlatform,
         },
       ]);
 
       if (error) throw error;
 
+      // 2. Send Confirmation Email (Non-blocking)
+      fetch("/api/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fullName: formData.fullName,
+          email: formData.email,
+          meetingDate: formData.meetingDate,
+          meetingTime: formData.meetingTime,
+          meetingPlatform: formData.meetingPlatform,
+        }),
+      }).catch((err) => console.error("Email sending failed:", err));
+
+      // 3. Show Success UI
       setIsSuccess(true);
       setTimeout(() => {
         resetForm();
@@ -161,7 +206,7 @@ export const useGetStarted = () => {
         setShowOtpInput(false);
         setTimeLeft(0);
         closeModal();
-      }, 2000);
+      }, 4000); // Updated to 4 seconds
     } catch (error) {
       console.error("Error submitting form:", error);
       setErrorMessage("Something went wrong. Please try again.");
@@ -205,6 +250,7 @@ export const useGetStarted = () => {
     // Actions
     closeModal,
     handleChange,
+    handleDateChange,
     setOtp,
     formatTime,
     handleNext,

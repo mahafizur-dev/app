@@ -172,9 +172,12 @@ const Hero = () => {
 
       <div className="relative z-10 max-w-6xl mx-auto flex flex-col items-center">
         <h1 className="text-6xl md:text-8xl lg:text-8xl font-semibold tracking-tighter leading-[0.9] mb-12 select-none">
-          <span className="block text-neutral-500">The future</span>
-
-          <span className="block text-neutral-500">of development</span>
+          <span className="block bg-clip-text text-transparent bg-gradient-to-r from-[#292828] via-[#636362] to-[#292828]">
+            The future
+          </span>
+          <span className="block bg-clip-text text-transparent bg-gradient-to-r from-[#292828] via-[#636362] to-[#292828]">
+            of development
+          </span>
 
           <div className="flex flex-wrap justify-center items-center gap-3 md:gap-6 mt-2 md:mt-4">
             <span className="text-neutral-500">is</span>
