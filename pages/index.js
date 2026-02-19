@@ -4,8 +4,7 @@ import Navbar from "../components/Navbar";
 import Hero from "../components/Hero";
 import ChooseYourAdventure from "../components/ChooseYourAdventure";
 import AIChangingSection from "../components/AIChangingSection";
-import Resources from "../components/Resources";
-import Pricing from "@/components/Pricing";
+import GenAISection from "@/components/GenAISection";
 import Footer from "../components/Footer";
 
 export default function Home() {
@@ -20,8 +19,7 @@ export default function Home() {
       <Hero />
       <ChooseYourAdventure />
       <AIChangingSection />
-      <Resources />
-      <Pricing />
+      <GenAISection />
       <Footer />
 
       {/* <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[90%] max-w-2xl bg-[#1A1A1A]/90 backdrop-blur-md border border-white/10 p-4 rounded-xl flex flex-col sm:flex-row items-center justify-between gap-4 z-[60] shadow-2xl animate-in slide-in-from-bottom-10 fade-in duration-700 delay-1000">
