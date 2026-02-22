@@ -11,13 +11,12 @@ import {
 import GetStartedModal from "./GetStartedModal";
 import useModalStore from "../store/useModalStore";
 
-// --- Perfect Sharp Sparkle Star Icon (Matches exactly with image_ea5ac0.png) ---
+// --- Perfect Sharp Sparkle Star Icon ---
 // Quadratic Bezier Curve bebohar kora hoyeche ekdom sharp edge anar jonno
-const SparkleStar = ({ className, color = "currentColor", blur = 0 }) => (
+const SparkleStar = ({ className, color = "currentColor" }) => (
   <svg
     viewBox="0 0 100 100"
     className={className}
-    style={{ filter: blur ? `blur(${blur}px)` : "none" }}
     xmlns="http://www.w3.org/2000/svg"
   >
     <path
@@ -31,51 +30,46 @@ const SparkleStar = ({ className, color = "currentColor", blur = 0 }) => (
 const MagicAIStar = () => {
   return (
     <div className="relative w-16 h-16 md:w-24 md:h-24 flex items-center justify-center mx-1 md:mx-2 transition-transform hover:scale-110 duration-500 z-20">
-      {/* Background er jonno soft green glow (Glow komano hoyeche) */}
+      
+      {/* Background er jonno soft brand glow */}
       <motion.div
         animate={{ opacity: [0.3, 0.6, 0.3], scale: [0.8, 1.0, 0.8] }}
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute inset-0 bg-[#00E571] blur-[15px] rounded-full mix-blend-screen opacity-40 pointer-events-none"
+        className="absolute inset-0 bg-[#FF6900] blur-[15px] rounded-full mix-blend-screen opacity-40 pointer-events-none"
+        style={{ willChange: "opacity, transform" }}
       />
 
       {/* Main star ebong dot gulo ek sathe smooth vabe ghurbe */}
       <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+        animate={{ rotate: [0, 360] }}
+        transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
         className="relative w-full h-full flex items-center justify-center pointer-events-none"
+        style={{ willChange: "transform" }}
       >
-        {/* Layer 1: Outer heavy green glow (Blur komano hoyeche) */}
-        <SparkleStar
-          className="absolute w-[85%] h-[85%]"
-          color="#00E571"
-          blur={4}
-        />
-
-        {/* Layer 2: Main crisp green star shape */}
-        <SparkleStar className="absolute w-[80%] h-[80%]" color="#0AD96E" />
-
+        {/* Layer 1: Outer heavy brand glow - Performance optimized with drop-shadow */}
+        <SparkleStar className="absolute w-[90%] h-[90%] opacity-50 drop-shadow-[0_0_15px_#FF6900]" color="#FF6900" />
+        
+        {/* Layer 2: Main crisp brand star shape */}
+        <SparkleStar className="absolute w-[80%] h-[80%] drop-shadow-[0_0_5px_#FF6900]" color="#FF8C33" />
+        
         {/* Layer 3: Inner white core glow */}
-        <SparkleStar
-          className="absolute w-[35%] h-[35%]"
-          color="#FFFFFF"
-          blur={2}
-        />
-
+        <SparkleStar className="absolute w-[40%] h-[40%] drop-shadow-[0_0_10px_#FFFFFF]" color="#FFFFFF" />
+        
         {/* Layer 4: Pure white center star */}
-        <SparkleStar className="absolute w-[25%] h-[25%]" color="#FFFFFF" />
+        <SparkleStar className="absolute w-[20%] h-[20%]" color="#FFFFFF" />
 
-        {/* Orbiting Dots - (Dot gulo choto kora hoyeche) */}
+        {/* Orbiting Dots */}
         {/* Top Right Boro Sada Dot */}
-        <div className="absolute top-[15%] right-[18%] w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full shadow-[0_0_8px_#fff,0_0_12px_#00E571]" />
-
-        {/* Top Left Choto Shobuj Dot */}
-        <div className="absolute top-[38%] left-[10%] w-0.5 h-0.5 md:w-1 md:h-1 bg-[#00E571] rounded-full shadow-[0_0_4px_#00E571]" />
-
-        {/* Bottom Left Majhari Shobuj Dot */}
-        <div className="absolute bottom-[22%] left-[22%] w-1 h-1 md:w-1.5 md:h-1.5 bg-[#00E571] rounded-full shadow-[0_0_6px_#00E571]" />
-
-        {/* Bottom Right Choto Shobuj Dot */}
-        <div className="absolute bottom-[32%] right-[12%] w-0.5 h-0.5 md:w-1 md:h-1 bg-[#00E571] rounded-full shadow-[0_0_4px_#00E571]" />
+        <div className="absolute top-[15%] right-[18%] w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full shadow-[0_0_8px_#fff,0_0_12px_#FF6900]" />
+        
+        {/* Top Left Choto Brand Dot */}
+        <div className="absolute top-[38%] left-[10%] w-0.5 h-0.5 md:w-1 md:h-1 bg-[#FF6900] rounded-full shadow-[0_0_4px_#FF6900]" />
+        
+        {/* Bottom Left Majhari Brand Dot */}
+        <div className="absolute bottom-[22%] left-[22%] w-1 h-1 md:w-1.5 md:h-1.5 bg-[#FF6900] rounded-full shadow-[0_0_6px_#FF6900]" />
+        
+        {/* Bottom Right Choto Brand Dot */}
+        <div className="absolute bottom-[32%] right-[12%] w-0.5 h-0.5 md:w-1 md:h-1 bg-[#FF6900] rounded-full shadow-[0_0_4px_#FF6900]" />
       </motion.div>
     </div>
   );
@@ -103,7 +97,7 @@ const FloatingParticles = () => {
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-[#2EC866]/30 blur-[1px]"
+          className="absolute rounded-full bg-[#FF6900]/30 blur-[1px]"
           style={{
             left: `${p.x}%`,
             top: `${p.y}%`,
@@ -169,11 +163,11 @@ const Hero = () => {
 
   // --- Scroll Animation Hooks ---
   const { scrollY } = useScroll();
-
+  
   // Scroll korle smooth scale down ebong fade out hobe
   const contentOpacity = useTransform(scrollY, [0, 400], [1, 0]);
-  const contentY = useTransform(scrollY, [0, 500], [0, 150]);
-  const contentScale = useTransform(scrollY, [0, 500], [1, 0.85]);
+  const contentY = useTransform(scrollY, [0, 500], [0, 150]); 
+  const contentScale = useTransform(scrollY, [0, 500], [1, 0.85]); 
 
   // Zustand store theke openModal call kora hocche
   const openModal = useModalStore((state) => state.openModal);
@@ -242,7 +236,7 @@ const Hero = () => {
           background: useMotionTemplate`
             radial-gradient(
               650px circle at ${mouseX}px ${mouseY}px,
-              rgba(46, 200, 102, 0.08),
+              rgba(255, 105, 0, 0.08),
               transparent 80%
             )
           `,
@@ -260,11 +254,11 @@ const Hero = () => {
           repeat: Infinity,
           ease: "easeInOut",
         }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#2EC866]/5 blur-[120px] rounded-full pointer-events-none z-0"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#FF6900]/5 blur-[120px] rounded-full pointer-events-none z-0"
       />
 
       {/* --- Main Content with Scroll & Load Animations --- */}
-      <motion.div
+      <motion.div 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
@@ -272,28 +266,20 @@ const Hero = () => {
         className="relative z-10 max-w-6xl mx-auto flex flex-col items-center"
       >
         <h1 className="text-4xl md:text-6xl lg:text-8xl font-semibold tracking-tighter leading-[0.9] mb-12 select-none flex flex-col items-center">
-          <motion.span
-            variants={itemVariants}
-            className="block bg-clip-text text-transparent bg-gradient-to-r from-[#292828] via-[#636362] to-[#292828] pb-1"
-          >
+          
+          <motion.span variants={itemVariants} className="block bg-clip-text text-transparent bg-gradient-to-r from-[#292828] via-[#636362] to-[#292828] pb-1">
             The future
           </motion.span>
-
-          <motion.span
-            variants={itemVariants}
-            className="block bg-clip-text text-transparent bg-gradient-to-r from-[#292828] via-[#636362] to-[#292828] pb-1"
-          >
+          
+          <motion.span variants={itemVariants} className="block bg-clip-text text-transparent bg-gradient-to-r from-[#292828] via-[#636362] to-[#292828] pb-1">
             of development
           </motion.span>
 
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap justify-center items-center gap-3 md:gap-6 mt-2 md:mt-4"
-          >
+          <motion.div variants={itemVariants} className="flex flex-wrap justify-center items-center gap-3 md:gap-6 mt-2 md:mt-4">
             <span className="text-neutral-500">is</span>
 
             {/* Fingerprint Icon */}
-            <div className="relative w-12 h-12 md:w-20 md:h-20 text-[#2EC866] flex items-center justify-center transition-transform hover:scale-110 duration-300">
+            <div className="relative w-12 h-12 md:w-20 md:h-20 text-[#FF6900] flex items-center justify-center transition-transform hover:scale-110 duration-300">
               <Fingerprint className="w-full h-full" strokeWidth={1.5} />
               <motion.div
                 initial={{ top: "0%" }}
@@ -303,7 +289,7 @@ const Hero = () => {
                   repeat: Infinity,
                   ease: "linear",
                 }}
-                className="absolute w-full h-[2px] bg-[#2EC866] shadow-[0_0_15px_#2EC866] opacity-80"
+                className="absolute w-full h-[2px] bg-[#FF6900] shadow-[0_0_15px_#FF6900] opacity-80"
               />
             </div>
 
@@ -324,10 +310,7 @@ const Hero = () => {
           </motion.div>
         </h1>
 
-        <motion.p
-          variants={itemVariants}
-          className="text-slate-400 text-lg md:text-xl max-w-xl mx-auto mb-16 leading-relaxed font-medium"
-        >
+        <motion.p variants={itemVariants} className="text-slate-400 text-lg md:text-xl max-w-xl mx-auto mb-16 leading-relaxed font-medium">
           Creating AI solutions for your business that help you accelerate
           growth and scale fast.
         </motion.p>
@@ -336,10 +319,10 @@ const Hero = () => {
           <MagneticButton>
             <button
               onClick={openModal}
-              className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-xl bg-transparent border border-white/20 px-10 font-bold text-white transition-all duration-300 hover:border-[#2EC866] hover:bg-[#2EC866]/10 hover:shadow-[0_0_25px_rgba(46,200,102,0.2)]"
+              className="group relative inline-flex h-14 items-center justify-center overflow-hidden rounded-xl bg-transparent border border-white/20 px-10 font-bold text-white transition-all duration-300 hover:border-[#FF6900] hover:bg-[#FF6900]/10 hover:shadow-[0_0_25px_rgba(255,105,0,0.2)]"
             >
               <span className="relative z-10 text-lg">Get Started</span>
-              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-[#2EC866] blur-[15px] opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-3/4 h-2 bg-[#FF6900] blur-[15px] opacity-60 group-hover:opacity-100 transition-opacity duration-300"></div>
             </button>
           </MagneticButton>
         </motion.div>

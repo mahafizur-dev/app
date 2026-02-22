@@ -47,7 +47,8 @@ const Navbar = () => {
           <span className="text-2xl font-bold tracking-tight text-white group-hover:text-slate-200 transition-colors">
             Presswayy
           </span>
-          <div className="w-2.5 h-2.5 bg-[#2EC866] rounded-[1px] mt-1 ml-0.5"></div>
+          {/* Brand color applied to the logo dot */}
+          <div className="w-2.5 h-2.5 bg-[#FF6900] rounded-[1px] mt-1 ml-0.5"></div>
         </div>
 
         {/* Center Links (Desktop) */}
@@ -68,12 +69,14 @@ const Navbar = () => {
 
         {/* Right Actions */}
         <div className="hidden md:flex items-center gap-6">
-          <button className="text-white hover:text-[#2EC866] font-bold text-sm px-4 py-2 border border-white/20 rounded-lg hover:border-[#2EC866] transition-all">
+          {/* Brand color applied to hover state of Request Demo button */}
+          <button className="text-white hover:text-[#FF6900] font-bold text-sm px-4 py-2 border border-white/20 rounded-lg hover:border-[#FF6900] transition-all">
             Request Demo
           </button>
+          {/* Brand color applied to Get Started button & its shadow */}
           <button
             onClick={openModal}
-            className="bg-[#2EC866] hover:bg-[#25a955] text-black px-5 py-2 rounded-lg text-sm font-bold transition-all hover:scale-105 shadow-[0_0_15px_rgba(46,200,102,0.4)]"
+            className="bg-[#FF6900] hover:bg-[#E65C00] text-white px-5 py-2 rounded-lg text-sm font-bold transition-all hover:scale-105 shadow-[0_0_15px_rgba(255,105,0,0.4)]"
           >
             Get Started
           </button>
@@ -82,7 +85,7 @@ const Navbar = () => {
         {/* Mobile Toggle */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-white hover:text-[#2EC866] transition-colors"
+          className="md:hidden text-white hover:text-[#FF6900] transition-colors"
         >
           {isOpen ? <X /> : <Menu />}
         </button>
@@ -110,7 +113,7 @@ const Navbar = () => {
               openModal();
               setIsOpen(false);
             }}
-            className="bg-[#2EC866] text-black w-full py-4 rounded-xl font-bold text-lg"
+            className="bg-[#FF6900] text-white w-full py-4 rounded-xl font-bold text-lg"
           >
             Get Started
           </button>

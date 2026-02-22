@@ -69,7 +69,7 @@ const AIChangingSection = () => {
   ];
 
   return (
-    <section className="relative z-30 rounded-b-[3rem] -mt-2 bg-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden font-sans">
+    <section className="bg-white pt-12 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden font-sans rounded-b-[3rem] border-none shadow-none">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <motion.h2
@@ -78,7 +78,7 @@ const AIChangingSection = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-medium text-slate-900 tracking-tight"
           >
-            <span className="text-[#2EC866]">AI Changing</span> <br />
+            <span className="text-[#FF6900]">AI Changing</span> <br />
             Software Development
           </motion.h2>
         </div>
@@ -97,7 +97,7 @@ const AIChangingSection = () => {
                 className={`cursor-pointer transition-all duration-500 group`}
               >
                 <div
-                  className={`pl-6 border-l-[3px] transition-colors duration-500 ${activeStep === idx ? "border-[#2EC866]" : "border-slate-200"}`}
+                  className={`pl-6 border-l-[3px] transition-colors duration-500 ${activeStep === idx ? "border-[#FF6900]" : "border-slate-200"}`}
                 >
                   <h3
                     className={`text-2xl font-medium mb-3 transition-colors duration-500 ${activeStep === idx ? "text-slate-900" : "text-slate-400 group-hover:text-slate-600"}`}

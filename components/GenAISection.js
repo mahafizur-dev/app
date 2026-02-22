@@ -16,7 +16,7 @@ const GenAISection = () => {
   return (
     <section className="bg-black py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden font-sans border-t border-white/5">
       {/* Ambient Background Glow (Static center glow) */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#2EC866]/5 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-[#FF6900]/5 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center">
@@ -29,7 +29,7 @@ const GenAISection = () => {
               viewport={{ once: true, margin: "-100px" }}
             >
               <h2 className="text-4xl md:text-5xl font-medium text-white mb-6 leading-[1.15] tracking-tight">
-                <span className="text-[#2EC866] inline-block animate-pulse">
+                <span className="text-[#FF6900] inline-block animate-pulse">
                   Presswayy
                 </span>{" "}
                 will execute <br />
@@ -63,7 +63,7 @@ const GenAISection = () => {
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="bg-[#2EC866]/10 text-[#2EC866] text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 border border-[#2EC866]/20">
+                        <div className="bg-[#FF6900]/10 text-[#FF6900] text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 border border-[#FF6900]/20">
                           <Sparkles size={10} fill="currentColor" /> AI Help
                         </div>
                         <div className="w-5 h-5 rounded-full bg-yellow-600 border border-[#1A1D24] flex items-center justify-center text-[8px] text-white font-bold">
@@ -90,7 +90,7 @@ const GenAISection = () => {
                   {/* Dashed Path Line */}
                   <motion.path
                     d="M10 10 Q 100 90 180 80"
-                    stroke="#2EC866"
+                    stroke="#FF6900"
                     strokeWidth="1.5"
                     strokeDasharray="6 4"
                     strokeLinecap="round"
@@ -107,7 +107,7 @@ const GenAISection = () => {
                   {/* Arrow Head */}
                   <motion.path
                     d="M170 75 L 180 80 L 172 88"
-                    stroke="#2EC866"
+                    stroke="#FF6900"
                     strokeWidth="1.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -192,7 +192,7 @@ const GenAISection = () => {
                         Making API requests and handling responses
                       </p>
                       <div className="flex items-center gap-2 mb-3">
-                        <div className="bg-[#2EC866]/10 text-[#2EC866] text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 border border-[#2EC866]/20 animate-pulse">
+                        <div className="bg-[#FF6900]/10 text-[#FF6900] text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 border border-[#FF6900]/20 animate-pulse">
                           <Sparkles size={10} fill="currentColor" /> AI Help
                         </div>
                         <div className="w-5 h-5 rounded-full bg-yellow-600 border border-[#1A1D24] flex items-center justify-center text-[8px] text-white font-bold">
@@ -211,7 +211,7 @@ const GenAISection = () => {
                         Writing README files
                       </p>
                       <div className="flex items-center gap-2">
-                        <div className="bg-[#2EC866]/10 text-[#2EC866] text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 border border-[#2EC866]/20">
+                        <div className="bg-[#FF6900]/10 text-[#FF6900] text-[10px] font-bold px-2 py-1 rounded-md flex items-center gap-1 border border-[#FF6900]/20">
                           <Sparkles size={10} fill="currentColor" /> AI Help
                         </div>
                         <div className="w-5 h-5 rounded-full bg-purple-600 border border-[#1A1D24] flex items-center justify-center text-[8px] text-white font-bold">
