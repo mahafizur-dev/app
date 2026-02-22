@@ -271,7 +271,7 @@ const Hero = () => {
         style={{ opacity: contentOpacity, y: contentY, scale: contentScale }}
         className="relative z-10 max-w-6xl mx-auto flex flex-col items-center"
       >
-        <h1 className="text-6xl md:text-8xl lg:text-8xl font-semibold tracking-tighter leading-[0.9] mb-12 select-none flex flex-col items-center">
+        <h1 className="text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tighter leading-[0.9] mb-12 select-none flex flex-col items-center">
           <motion.span
             variants={itemVariants}
             className="block bg-clip-text text-transparent bg-gradient-to-r from-[#292828] via-[#636362] to-[#292828] pb-1"
