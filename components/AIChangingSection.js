@@ -79,7 +79,7 @@ const AIChangingSection = () => {
             className="text-4xl md:text-5xl font-medium text-slate-900 tracking-tight"
           >
             <span className="text-[#FF6900]">AI Changing</span> <br />
-            Software Development
+            Automation Business
           </motion.h2>
         </div>
 
