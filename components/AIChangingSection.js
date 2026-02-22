@@ -69,7 +69,7 @@ const AIChangingSection = () => {
   ];
 
   return (
-    <section className="bg-white py-24 px-4 rounded-b-[3rem] sm:px-6 lg:px-8 border-b border-slate-100 overflow-hidden font-sans">
+    <section className="relative z-30 rounded-b-[3rem] -mt-2 bg-white py-24 px-4 sm:px-6 lg:px-8 overflow-hidden font-sans">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-20">
           <motion.h2
@@ -133,7 +133,7 @@ const AIChangingSection = () => {
               {/* Background Image Container */}
               <div className="absolute top-0 right-0 w-[85%] h-[85%] rounded-[2rem] overflow-hidden">
                 <img
-                  src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1887&auto=format&fit=crop"
                   alt="Woman looking at city"
                   className="w-full h-full object-cover grayscale-[20%]"
                 />
