@@ -24,7 +24,7 @@ const ChooseYourAdventure = () => {
           >
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div>
-                <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-[#FF6900] transition-colors">
+                <h3 className="text-3xl font-bold text-white mb-4  transition-colors">
                   Product Suggestion
                 </h3>
                 <p className="text-slate-400 mb-8 text-lg leading-relaxed">
@@ -67,7 +67,7 @@ const ChooseYourAdventure = () => {
           >
             <div className="relative z-10 flex flex-col h-full justify-between">
               <div>
-                <h3 className="text-3xl font-bold text-white mb-4 group-hover:text-[#FF6900] transition-colors">
+                <h3 className="text-3xl font-bold text-white mb-4 transition-colors">
                   Customer Support
                 </h3>
                 <p className="text-slate-400 mb-8 text-lg leading-relaxed">
