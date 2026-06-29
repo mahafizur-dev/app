@@ -35,7 +35,7 @@ const useModalStore = create((set) => ({
         email: "",
         phone: "",
         companyName: "",
-        companySize: "1-10 employees",
+        companySize: "",
         jobTitle: "",
         meetingDate: "",
         meetingTime: "10:00 AM",
